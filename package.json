@@ -1,0 +1,35 @@
+{
+ "name": "@pacoca-io/utils",
+ "version": "1.0.0",
+ "description": "Utilitary functions for Pacoca projects",
+ "main": "dist/index.js",
+ "types": "dist/index.d.ts",
+ "scripts": {
+  "build": "tsc -d",
+  "deploy": "npm i && tsc && npm version patch --force && npm publish --access public"
+ },
+ "repository": {
+  "type": "git",
+  "url": "git+https://github.com/Pacoca-io/utils.git"
+ },
+ "author": "AmendoBobo",
+ "license": "ISC",
+ "bugs": {
+  "url": "https://github.com/Pacoca-io/utils/issues"
+ },
+ "homepage": "https://github.com/Pacoca-io/utils#readme",
+ "devDependencies": {
+  "@typescript-eslint/eslint-plugin": "^5.14.0",
+  "@typescript-eslint/parser": "^5.14.0",
+  "eslint": "^8.5.0",
+  "ethers": "^5.5.4",
+  "typescript": "~4.5.4"
+ },
+ "dependencies": {
+  "@types/throttle-debounce": "^5.0.0",
+  "case": "^1.6.3",
+  "throttle-debounce": "^5.0.0",
+  "web3": "^1.7.3",
+  "web3-utils": "^1.7.3"
+ }
+}

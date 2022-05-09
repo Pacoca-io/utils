@@ -1,12 +1,12 @@
 {
  "name": "@pacoca-io/utils",
- "version": "1.0.1",
+ "version": "1.0.2",
  "description": "Utilitary functions for Pacoca projects",
  "main": "dist/index.js",
  "types": "dist/index.d.ts",
  "scripts": {
   "build": "tsc -d",
-  "deploy": "npm i && tsc && npm version patch --force && npm publish --access public"
+  "deploy": "npm i && tsc -d && npm version patch --force && npm publish --access public"
  },
  "repository": {
   "type": "git",

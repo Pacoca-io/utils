@@ -9,7 +9,6 @@ export const BABY_FACTORY = '0x86407bea2078ea5f5eb5a52b2caa963bc1f889da'.toLower
 
 export const factories = {
 	[ETH]: [
-		// '0x1F98431c8aD98523631AE4a59f267346ea31F984', // Uniswap
 		'0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f', // Uni v2
 		'0xC0AEe478e3658e2610c5F7A4A2E1777cE9e4f2Ac', // Sushi
 	].map(factory => factory.toLowerCase()),

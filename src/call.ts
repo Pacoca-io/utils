@@ -1,9 +1,16 @@
 import { BatchExecutor } from './BatchExecutor'
 import { availableChains, Chain, BSC } from './chains'
 
-interface ICallArgs {
+type Call<T> = (...args: any[]) => T
+
+interface ICallArgs<T> {
   chain: Chain
-  call: () => any
+  call: Call<T>
+}
+
+interface IMulticallArgs<T> {
+    chain: Chain
+    calls: Call<T>[]
 }
 
 type IInstances = {
@@ -15,7 +22,10 @@ const instances: IInstances = availableChains.reduce(
 	{},
 )
 
-export const call = async <T>({ chain, call }: ICallArgs): Promise<T> =>
+export const bscCall = (_call: () => any)=> call({ chain: BSC, call: _call })
+
+export const call = async <T>({ chain, call }: ICallArgs<T>): Promise<T> =>
 	(await instances[chain].call({ call })) as T
 
-export const bscCall = (_call: () => any)=> call({ chain: BSC, call: _call })
+export const multicall = <T>({ chain, calls }: IMulticallArgs<T>): Promise<T[]> =>
+  Promise.all(calls.map(c => call<T>({ chain, call: c })))

@@ -22,7 +22,7 @@ const instances: IInstances = availableChains.reduce(
 	{},
 )
 
-export const bscCall = (_call: () => any)=> call({ chain: BSC, call: _call })
+export const bscCall = <T>(_call: Call<T>)=> call({ chain: BSC, call: _call })
 
 export const call = async <T>({ chain, call }: ICallArgs<T>): Promise<T> =>
 	(await instances[chain].call({ call })) as T

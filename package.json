@@ -1,6 +1,6 @@
 {
  "name": "@pacoca-io/utils",
- "version": "1.0.4",
+ "version": "1.0.6",
  "description": "Utilitary functions for Pacoca projects",
  "main": "dist/index.js",
  "types": "dist/index.d.ts",

@@ -13,13 +13,13 @@ export const PANCAKE_ROUTER = '0x10ed43c718714eb63d5aa57b78b54704e256024e'
 export const CAFE_ROUTER = '0x933daea3a5995fb94b14a7696a5f3ffd7b1e385a'
 export const BABY_ROUTER = '0x325e343f1de602396e256b67efd1f61c3a6b38bd'
 
-type RouterToFactory = {
+type AddressToAddressByChain = {
   [key in Chain]?: {
     [key: string]: string
   }
 }
 
-export const routerToFactoryMap: RouterToFactory = {
+export const routerToFactoryMap: AddressToAddressByChain = {
 	[BSC]: {
 		[APE_ROUTER]: APE_FACTORY,
 		[PANCAKE_ROUTER]: PANCAKE_FACTORY,
@@ -29,3 +29,12 @@ export const routerToFactoryMap: RouterToFactory = {
 	},
 }
 
+export const factoryToRouterMap: AddressToAddressByChain = {
+	[BSC]: {
+		[APE_FACTORY]: APE_ROUTER,
+		[PANCAKE_FACTORY]: PANCAKE_ROUTER,
+		[BISWAP_FACTORY]: BISWAP_ROUTER,
+		[CAFE_FACTORY]: CAFE_ROUTER,
+		[BABY_FACTORY]: BABY_ROUTER,
+	}
+}

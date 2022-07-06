@@ -3,6 +3,7 @@ import { Chain } from './chains'
 import { call } from './call'
 import { contractor } from './contractor'
 import erc20Abi from './abis/erc20.json'
+import pairAbi from './abis/pair.json'
 
 const WETH = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'.toLowerCase()
 const WBNB = '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c'.toLowerCase()
@@ -35,6 +36,7 @@ export const tokens = {
         FLOW: '0xc943c5320b9c18c153d1e2d12cc3074bebfb31a2'.toLowerCase(),
         NUSD: '0x23b891e5c62e0955ae2bd185990103928ab817b3'.toLowerCase(),
         SYN: '0xa4080f1778e69467e905b8d6f72f6e441f9e9484'.toLowerCase(),
+        USDC: '0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d'.toLowerCase(),
     },
     [POLY]: {
         WMATIC,
@@ -88,7 +90,39 @@ export interface IToken {
 		chain: Chain,
 }
 
-export const getToken = async ({
+export const getPairInfo = async ({
+    chain,
+    address
+}: IGetTokenArgs): Promise<IToken> => {
+    const contract = contractor({
+        chain,
+        abi: pairAbi,
+        address,
+        name: 'pair'
+    })
+
+    const [name, decimals, token0, token1] = await Promise.all([
+		    call<string>({ chain, call: contract.methods.name() }),
+		    call<number>({ chain, call: contract.methods.decimals() }),
+		    call<string>({ chain, call: contract.methods.token0() }),
+		    call<string>({ chain, call: contract.methods.token1() }),
+    ])
+
+    const [token0Info, token1Info] = await Promise.all([
+        getToken({ chain, address: token0 }),
+        getToken({ chain, address: token1 }),
+    ])
+
+    return {
+		    symbol: `${token0Info.symbol}-${token1Info.symbol}`.toUpperCase(),
+		    name,
+		    address,
+		    decimals,
+		    chain,
+    }
+}
+
+export const getERC20Info = async ({
 	chain,
 	address
 }: IGetTokenArgs): Promise<IToken>  => {
@@ -113,3 +147,32 @@ export const getToken = async ({
 		chain,
 	}
 }
+
+export const isPair = async ({ address, chain }: IGetTokenArgs) => {
+    try {
+        const contract = contractor({
+            name: 'pair',
+            abi: pairAbi,
+            address,
+            chain,
+        })
+
+        await call({ chain, call: contract.methods.getReserves() })
+
+        return true
+    }
+    catch (e) {
+        return false
+    }
+}
+
+
+export const getToken = async ({
+	chain,
+	address
+}: IGetTokenArgs): Promise<IToken>  => {
+    const pair = await isPair({ chain, address })
+
+    return pair ? getPairInfo({ chain, address }) : getERC20Info({ chain, address })
+}
+

@@ -40,7 +40,7 @@ export const getPairAddress = async ({
 	factoryAddress,
 }: IGetPairAddressArgs): Promise<string> => {
 	if(!factoryAddress && !routerAddress)
-		throw Error('getPairAddress::Either router ou factory address must be provided')
+		throw Error('getPairAddress::Either router or factory address must be provided')
 
 	if (!factoryAddress) {
 		const router = contractor({
@@ -55,7 +55,6 @@ export const getPairAddress = async ({
 			call: router.methods.factory()
 		})
 	}
-
 
 	const factory = await contractor({
 		chain,

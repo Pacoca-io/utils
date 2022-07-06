@@ -1,5 +1,6 @@
 import { BatchExecutor } from './BatchExecutor'
-import { availableChains, Chain, BSC } from './chains'
+import { availableChains, Chain } from './chains'
+import { BSC } from './constants/chains'
 
 type Call<T> = (...args: any[]) => T
 
@@ -28,4 +29,4 @@ export const call = async <T>({ chain, call }: ICallArgs<T>): Promise<T> =>
 	(await instances[chain].call({ call })) as T
 
 export const multicall = <T>({ chain, calls }: IMulticallArgs<T>): Promise<T[]> =>
-  Promise.all(calls.map(c => call<T>({ chain, call: c })))
+	Promise.all(calls.map(c => call<T>({ chain, call: c })))

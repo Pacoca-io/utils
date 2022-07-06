@@ -1,5 +1,6 @@
 import Web3 from 'web3'
-import { chainData, Chain, ETH, BSC, POLY, AVAX, FTM } from './chains'
+import { chainData, ETH, BSC, POLY, AVAX, FTM } from './constants/chains'
+import { Chain } from './chains'
 
 type IRpc = {
   [key in Chain]: Web3

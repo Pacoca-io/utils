@@ -5,7 +5,8 @@ import {
 	BABY_FACTORY,
 	CAFE_FACTORY,
 } from './factories'
-import { Chain, BSC } from './chains'
+import { BSC } from './chains'
+import { Chain } from '../chains'
 
 export const APE_ROUTER = '0xcf0febd3f17cef5b47b0cd257acf6025c5bff3b7'
 export const BISWAP_ROUTER = '0x3a6d8ca21d1cf76f653a67577fa0d27453350dd8'
